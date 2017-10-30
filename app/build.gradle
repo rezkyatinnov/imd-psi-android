@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: "kotlin-kapt"
+apply plugin: 'realm-android'
+
+android {
+    flavorDimensions "default"
+    compileSdkVersion project.compileSdkVersion
+    buildToolsVersion project.buildToolsVersion
+    defaultConfig {
+        applicationId "com.rezkyatinnov.imdpsi"
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
+        versionCode project.publishVersionCode
+        versionName project.publishVersionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    productFlavors {
+        stage {
+            dimension "default"
+            buildConfigField 'String', 'DB_KEY', '"92jSim1SpGLlGah0adQce2uM39CBiB2K4wTMQiTFV2sHyoh611vej8Qg57pPmXC6"'
+            buildConfigField 'String', 'SCHEMA_NAME', '"reach.realm"'
+            buildConfigField 'String', 'SCHEMA_VERSION', '"1"'
+            buildConfigField 'String', 'BASE_URL', '"https://api.webtvasia.com/v1/"'
+            buildConfigField 'String', 'SHARED_PREF_NAME', '"com.webtvasia.Webtvasia.pref"'
+        }
+        prod {
+            dimension "default"
+            buildConfigField 'String', 'DB_KEY', '"92jSim1SpGLlGah0adQce2uM39CBiB2K4wTMQiTFV2sHyoh611vej8Qg57pPmXC6"'
+            buildConfigField 'String', 'SCHEMA_NAME', '"reach.realm"'
+            buildConfigField 'String', 'SCHEMA_VERSION', '"1"'
+            buildConfigField 'String', 'BASE_URL', '"https://api.webtvasia.com/v1/"'
+            buildConfigField 'String', 'SHARED_PREF_NAME', '"com.webtvasia.Webtvasia.pref"'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    kapt {
+        generateStubs = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "com.android.support:appcompat-v7:$project.buildToolsVersion"
+    implementation "com.android.support.constraint:constraint-layout:1.0.2"
+
+    kapt 'com.android.databinding:compiler:2.3.3'
+    implementation 'com.github.rezkyatinnov:kyandroid:1.0.0-rc8'
+}
