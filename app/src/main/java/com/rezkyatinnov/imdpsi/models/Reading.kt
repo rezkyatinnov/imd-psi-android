@@ -25,4 +25,17 @@ class Reading(
         @SerializedName("north")
         @Expose
         var north: Double = 0.toDouble()
-)
+){
+        fun getRegionValue(region: String): Double{
+                when(region){
+                        "west" -> return west
+                        "national" -> return national
+                        "east" -> return east
+                        "central" -> return central
+                        "south" -> return south
+                        "north" -> return north
+                        else -> return 0.0
+                }
+
+        }
+}
