@@ -5,6 +5,8 @@ import android.content.Context
 import com.rezkyatinnov.kyandroid.Kyandroid
 import com.rezkyatinnov.kyandroid.localdata.KyandroidRealmModule
 import com.rezkyatinnov.imdpsi.rest.RestServices
+import com.rezkyatinnov.kyandroid.session.Session
+import com.rezkyatinnov.kyandroid.session.SessionObject
 
 /**
  * Created by rezkyatinnov on 30/10/2017.
@@ -20,5 +22,6 @@ class App : Application() {
                 BuildConfig.SCHEMA_VERSION.toLong(),
                 true,
                 KyandroidRealmModule())
+        Session.save(SessionObject("api-key",BuildConfig.PSI_APIKEY,true))
     }
 }
