@@ -9,11 +9,11 @@ import com.google.gson.annotations.SerializedName
 data class Psi (
         @SerializedName("region_metadata")
         @Expose
-        private var regionMetadata: ArrayList<RegionMetadata>? = null,
+        var regionMetadata: ArrayList<RegionMetadata>? = null,
         @SerializedName("items")
         @Expose
-        private var psiItems: ArrayList<Item>? = null,
+        var items: ArrayList<Item>? = null,
         @SerializedName("api_info")
         @Expose
-        private var apiInfo: ApiInfo? = null
+        var apiInfo: ApiInfo? = null
 )

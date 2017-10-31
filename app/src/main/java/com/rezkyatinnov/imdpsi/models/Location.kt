@@ -8,13 +8,13 @@ import com.google.gson.annotations.SerializedName
  * Created by rezkya on 10/31/17.
  */
 data class Location(
-        @SerializedName("name")
+        @SerializedName("latitude")
         @Expose
-        private var latitude: Double? = 0.0,
-        @SerializedName("name")
+        var latitude: Double? = 0.0,
+        @SerializedName("longitude")
         @Expose
-        private var longitude: Double? = 0.0,
-        @SerializedName("name")
+        var longitude: Double? = 0.0,
+        @SerializedName("latLng")
         @Expose
-        private var latLng: LatLng? = null
+        var latLng: LatLng? = null
 )

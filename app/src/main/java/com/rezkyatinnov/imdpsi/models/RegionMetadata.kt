@@ -9,8 +9,8 @@ import com.google.gson.annotations.SerializedName
 data class RegionMetadata(
         @SerializedName("name")
         @Expose
-        private var name: String? = null,
+        var name: String? = null,
         @SerializedName("label_location")
         @Expose
-        private var location: Location? = null
+        var location: Location? = null
 )
