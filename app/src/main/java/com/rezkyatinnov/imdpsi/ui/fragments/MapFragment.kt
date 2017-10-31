@@ -18,11 +18,9 @@ import com.rezkyatinnov.imdpsi.R
 import com.rezkyatinnov.imdpsi.models.Psi
 import com.rezkyatinnov.imdpsi.models.Readings
 import com.rezkyatinnov.imdpsi.models.RegionMetadata
-import com.rezkyatinnov.imdpsi.rest.PsiHelper
-import com.rezkyatinnov.kyandroid.reztrofit.ErrorResponse
-import com.rezkyatinnov.kyandroid.reztrofit.RestObserver
-import io.reactivex.disposables.Disposable
-import okhttp3.Headers
+import com.rezkyatinnov.kyandroid.localdata.LocalData
+import com.rezkyatinnov.kyandroid.localdata.QueryFilters
+import io.realm.RealmList
 
 /**
  * Created by rezkyatinnov on 31/10/2017.
@@ -30,7 +28,7 @@ import okhttp3.Headers
  */
 class MapFragment: Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private var googleMap: GoogleMap? = null
-    private var readings: Readings? = null
+    private var mapMarkers: ArrayList<Marker> = ArrayList()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_map, container, false)
@@ -57,30 +55,21 @@ class MapFragment: Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCal
                     .position(location)
                     .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(resources, R.drawable.ic_location_on)))
                     .title(title)
-            googleMap!!.addMarker(marker)
+            mapMarkers.add(googleMap!!.addMarker(marker))
         }
     }
 
-    private fun getPsiDataFromApi() {
-        PsiHelper.getPsi(object:RestObserver<Psi>(){
-            override fun onComplete() {
-            }
+    private fun setPsiData() {
+        val psi = LocalData.get(QueryFilters(),Psi::class.java)
+        activity.runOnUiThread { setRegionalMetaDataLocation(psi.regionMetadata!!) }
 
-            override fun onFailed(error: ErrorResponse?) {
-                Toast.makeText(activity, error?.message, Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onSubscribe(d: Disposable) {
-            }
-
-            override fun onSuccess(headers: Headers?, body: Psi?) {
-                readings = body?.items!![0].readings
-                activity.runOnUiThread { setRegionalMetaDataLocation(body.regionMetadata!!) }
-            }
-        })
     }
 
-    private fun setRegionalMetaDataLocation(metaDataLocation: ArrayList<RegionMetadata>) {
+    private fun setRegionalMetaDataLocation(metaDataLocation: RealmList<RegionMetadata>) {
+        for(marker in mapMarkers){
+            marker.remove()
+        }
+        mapMarkers.clear()
         for (regionMetadata in metaDataLocation) {
             pinLocationMarker(regionMetadata.name!!, LatLng(regionMetadata.location?.latitude!!,regionMetadata.location?.longitude!!))
         }
@@ -102,6 +91,6 @@ class MapFragment: Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCal
         val singaporeBound = LatLngBounds(LatLng(1.1637, 103.5921333), LatLng(1.46145, 104.0828713))
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(singaporeLatLng, 10.5f))
         googleMap.setLatLngBoundsForCameraTarget(singaporeBound)
-        getPsiDataFromApi()
+        setPsiData()
     }
 }

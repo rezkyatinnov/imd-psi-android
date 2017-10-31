@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -15,12 +14,9 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.rezkyatinnov.imdpsi.R
 import com.rezkyatinnov.imdpsi.models.Psi
-import com.rezkyatinnov.imdpsi.rest.PsiHelper
-import com.rezkyatinnov.kyandroid.reztrofit.ErrorResponse
-import com.rezkyatinnov.kyandroid.reztrofit.RestObserver
-import io.reactivex.disposables.Disposable
+import com.rezkyatinnov.kyandroid.localdata.LocalData
+import com.rezkyatinnov.kyandroid.localdata.QueryFilters
 import kotlinx.android.synthetic.main.fragment_chart.*
-import okhttp3.Headers
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,15 +34,15 @@ internal class Chart24Fragment : Fragment() {
             return df.format(Date())
         }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_chart, container, false)
-        return view
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_chart, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initChart()
-        getPsiDataFromApi()
+
+        setChartData(linechart,LocalData.get(QueryFilters(),Psi::class.java))
     }
 
     private fun initChart() {
@@ -63,32 +59,13 @@ internal class Chart24Fragment : Fragment() {
         linechart!!.invalidate()
     }
 
-    private fun getPsiDataFromApi() {
-        PsiHelper.getPsi(object: RestObserver<Psi>(){
-            override fun onComplete() {
-            }
-
-            override fun onFailed(error: ErrorResponse?) {
-                Toast.makeText(activity, error?.message, Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onSubscribe(d: Disposable) {
-            }
-
-            override fun onSuccess(headers: Headers?, body: Psi?) {
-                activity.runOnUiThread { setChartData(linechart, body!!) }
-                animator!!.displayedChild = 1
-            }
-        })
-    }
-
     protected fun setChartData(chart: LineChart, data: Psi) {
         val dataSets = ArrayList<ILineDataSet>()
         for (yAxis in 0 until data.regionMetadata!!.size) {
-            val region = data.regionMetadata!!.get(yAxis).name
+            val region = data.regionMetadata!![yAxis]!!.name
             val yValues = ArrayList<Entry>()
             for (xAxis in 0 until data.items!!.size) {
-                val psiRegion = data.items!!.get(xAxis).readings?.getPsiByRegion(region!!)
+                val psiRegion = data.items!![xAxis]!!.readings?.getPsiByRegion(region!!)
                 val xVal = (xAxis + 1).toFloat()
                 val entry = Entry(xVal, psiRegion?.get("psiTwentyFourHourly")!!.toFloat())
                 yValues.add(entry)
