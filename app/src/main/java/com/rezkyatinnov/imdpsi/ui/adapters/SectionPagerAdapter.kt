@@ -3,6 +3,7 @@ package com.rezkyatinnov.imdpsi.ui.adapters
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import com.rezkyatinnov.imdpsi.ui.fragments.MapFragment
 import com.rezkyatinnov.imdpsi.ui.fragments.PlaceholderFragment
 
 /**
@@ -14,7 +15,17 @@ import com.rezkyatinnov.imdpsi.ui.fragments.PlaceholderFragment
 class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-        return PlaceholderFragment.newInstance(position + 1)
+        when(position){
+            0 -> {
+                return MapFragment()
+            }
+            1 -> {
+                return PlaceholderFragment.newInstance(position + 1)
+            }
+            else -> {
+                return PlaceholderFragment.newInstance(position + 1)
+            }
+        }
     }
 
     override fun getPageTitle(position: Int): CharSequence {

@@ -23,6 +23,8 @@ android {
             dimension "default"
             buildConfigField 'String', 'DB_KEY', '"Ju5hrFs7RO91sUNjJKIp4h0oGsSeVjQ0UTXPkzl8AS47eRexKSx9AcMskBpmMgYH"'
             buildConfigField 'String', 'PSI_APIKEY', '"FDCcGGAI09KO7ODwtF0wOCphywPe4zMs"'
+            buildConfigField 'String', 'GOOGLE_API_KEY', '"AIzaSyA4DfZVrBo7Akuf_t8BBJOasAc_uG-IIAo"'
+            resValue 'string', 'google_api_key', '"AIzaSyA4DfZVrBo7Akuf_t8BBJOasAc_uG-IIAo"'
             buildConfigField 'String', 'SCHEMA_NAME', '"imdpsi.realm"'
             buildConfigField 'String', 'SCHEMA_VERSION', '"1"'
             buildConfigField 'String', 'BASE_URL', '"https://api.data.gov.sg/v1/"'
@@ -32,6 +34,8 @@ android {
             dimension "default"
             buildConfigField 'String', 'DB_KEY', '"Ju5hrFs7RO91sUNjJKIp4h0oGsSeVjQ0UTXPkzl8AS47eRexKSx9AcMskBpmMgYH"'
             buildConfigField 'String', 'PSI_APIKEY', '"FDCcGGAI09KO7ODwtF0wOCphywPe4zMs"'
+            buildConfigField 'String', 'GOOGLE_API_KEY', '"AIzaSyA4DfZVrBo7Akuf_t8BBJOasAc_uG-IIAo"'
+            resValue 'string', 'google_api_key', '"AIzaSyA4DfZVrBo7Akuf_t8BBJOasAc_uG-IIAo"'
             buildConfigField 'String', 'SCHEMA_NAME', '"imdpsi.realm"'
             buildConfigField 'String', 'SCHEMA_VERSION', '"1"'
             buildConfigField 'String', 'BASE_URL', '"https://api.data.gov.sg/v1/"'
