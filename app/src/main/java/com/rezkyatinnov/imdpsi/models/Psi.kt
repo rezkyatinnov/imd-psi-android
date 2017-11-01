@@ -10,10 +10,8 @@ import io.realm.annotations.PrimaryKey
  * Created by rezkya on 10/31/17.
  */
 open class Psi (
-        @SerializedName("is_datetime")
-        @Expose
         @PrimaryKey
-        open var isDatetime: Int? = 1,
+        open var type: Int? = PsiType.TYPE_DATETIME,
         @SerializedName("region_metadata")
         @Expose
         var regionMetadata: RealmList<RegionMetadata>? = null,
@@ -23,4 +21,10 @@ open class Psi (
         @SerializedName("api_info")
         @Expose
         var apiInfo: ApiInfo? = null
-): RealmObject()
+): RealmObject(){
+        object PsiType {
+                val TYPE_DATE = 0
+                val TYPE_DATETIME = 1
+                val TYPE_FIELD_NAME = "type"
+        }
+}

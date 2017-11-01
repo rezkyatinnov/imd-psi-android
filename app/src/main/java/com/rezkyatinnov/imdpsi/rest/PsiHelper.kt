@@ -41,9 +41,10 @@ object PsiHelper {
                 observer.onSubscribe(d)
             }
 
-            override fun onSuccess(headers: Headers?, body: Psi?) {
-                body?.isDatetime = 1
-                observer.onSuccess(headers,body)
+            override fun onSuccess(headers: Headers?, body: Psi) {
+                var psi:Psi = body
+                psi.type = Psi.PsiType.TYPE_DATETIME
+                observer.onSuccess(headers,psi)
             }
 
         })
@@ -73,9 +74,10 @@ object PsiHelper {
                 observer.onSubscribe(d)
             }
 
-            override fun onSuccess(headers: Headers?, body: Psi?) {
-                body?.isDatetime = 0
-                observer.onSuccess(headers,body)
+            override fun onSuccess(headers: Headers?, body: Psi) {
+                var psi:Psi = body
+                psi.type = Psi.PsiType.TYPE_DATE
+                observer.onSuccess(headers,psi)
             }
 
         })

@@ -49,14 +49,14 @@ class SplashActivity : AppCompatActivity() {
             }
 
             override fun onFailed(error: ErrorResponse?) {
-//                var filter = QueryFilters()
-//                filter.add("isDatetime",0)
-//                try {
-//                    LocalData.get(filter, Psi::class.java)
-//                    val intent = Intent(this@SplashActivity, MainActivity::class.java)
-//                    startActivity(intent)
-//                    finish()
-//                }catch(e:Exception) {
+                var filter = QueryFilters()
+                filter.add(Psi.PsiType.TYPE_FIELD_NAME,Psi.PsiType.TYPE_DATE)
+                try {
+                    LocalData.get(filter, Psi::class.java) // check if app has localdata
+                    val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }catch(e:Exception) {
                     AlertUtils.showDialogDualActions(
                             this@SplashActivity,
                             "Ouch!",
@@ -69,7 +69,7 @@ class SplashActivity : AppCompatActivity() {
                             { _, _ ->
                                 finish()
                             })
-//                }
+                }
             }
 
         })

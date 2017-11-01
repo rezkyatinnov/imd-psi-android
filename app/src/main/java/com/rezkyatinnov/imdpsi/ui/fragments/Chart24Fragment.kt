@@ -43,7 +43,7 @@ internal class Chart24Fragment : Fragment() {
         initChart()
 
         var filter = QueryFilters()
-        filter.add("isDatetime",0)
+        filter.add(Psi.PsiType.TYPE_FIELD_NAME,Psi.PsiType.TYPE_DATE)
         setChartData(linechart,LocalData.get(filter,Psi::class.java))
     }
 

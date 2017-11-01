@@ -62,7 +62,9 @@ class MapFragment: Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCal
     }
 
     private fun setPsiData() {
-        val psi = LocalData.get(QueryFilters(),Psi::class.java)
+        var filter = QueryFilters()
+        filter.add(Psi.PsiType.TYPE_FIELD_NAME,Psi.PsiType.TYPE_DATE)
+        val psi = LocalData.get(filter,Psi::class.java)
         activity.runOnUiThread { setRegionalMetaDataLocation(psi) }
     }
 
