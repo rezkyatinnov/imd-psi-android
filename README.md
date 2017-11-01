@@ -18,6 +18,7 @@ This project built with kyandroid. an android library created by myself to help 
 
  * [Kyandroid 1.0.0-RC8](https://github.com/rezkyatinnov/kyandroid) Android Project Kickstarter, featuring Retrofit as Http client, Realm as local data storage and RxJava for ReactiveX Observer
  * [MPAndroidChart 3.0.2](https://github.com/PhilJay/MPAndroidChart) Chart View Library
+ * [SmartTabLayout 1.6.1](https://github.com/ogaclejapan/SmartTabLayout) Customized TabLayout
  * [Play Service Maps](https://developers.google.com/android/guides/setup) to show Map with psi data
 
 ## Run 
@@ -32,7 +33,7 @@ git clone https://github.com/rezkyatinnov/imd-psi-android.git
 * run the project via connected device or emulator
 
 ## Screen Captures
-![Splash](https://github.com/rezkyatinnov/imd-psi-android/blob/master/captures/splash.png)
-![Maps](https://github.com/rezkyatinnov/imd-psi-android/blob/master/captures/map.png)
-![Map Marker Info](https://github.com/rezkyatinnov/imd-psi-android/blob/master/captures/map_info.png)
-![Chart](https://github.com/rezkyatinnov/imd-psi-android/blob/master/captures/chart.png)
+![Splash](https://github.com/rezkyatinnov/imd-psi-android/blob/master/screencaptures/splash.png)
+![Maps](https://github.com/rezkyatinnov/imd-psi-android/blob/master/screencaptures/map.png)
+![Map Marker Info](https://github.com/rezkyatinnov/imd-psi-android/blob/master/screencaptures/map_info.png)
+![Chart](https://github.com/rezkyatinnov/imd-psi-android/blob/master/screencaptures/chart.png)

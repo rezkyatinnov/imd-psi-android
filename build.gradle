@@ -25,8 +25,8 @@ project.ext.targetSdkVersion = 26
 project.ext.googleAPIsVersion = "26.0.2"
 project.ext.playServicesVersion = "10.2.6"
 
-project.ext.publishVersionCode = 0
-project.ext.publishVersionName = "0.0.0"
+project.ext.publishVersionCode = 1
+project.ext.publishVersionName = "1.0.0"
 
 allprojects {
     repositories {
