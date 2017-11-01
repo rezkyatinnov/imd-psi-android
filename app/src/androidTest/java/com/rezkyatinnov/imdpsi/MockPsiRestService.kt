@@ -1,9 +1,9 @@
 package com.rezkyatinnov.imdpsi
 
-import com.google.android.gms.maps.model.LatLng
 import com.rezkyatinnov.imdpsi.models.*
 import com.rezkyatinnov.imdpsi.rest.RestServices
 import io.reactivex.Observable
+import io.realm.RealmList
 import retrofit2.Response
 import retrofit2.mock.BehaviorDelegate
 
@@ -11,16 +11,16 @@ import retrofit2.mock.BehaviorDelegate
  * Created by rezkyatinnov on 31/10/2017.
  */
 class MockPsiRestService(val delegate: BehaviorDelegate<RestServices>) : RestServices {
-    override fun getPsi(dateTime: String, date: String): Observable<Response<Psi>> {
-        var regionMetadatas = ArrayList<RegionMetadata>()
-        regionMetadatas.add(RegionMetadata("west", Location(1.35735, 103.7, LatLng(1.35735, 103.7))))
-        regionMetadatas.add(RegionMetadata("national", Location(0.0, 0.0, LatLng(0.0, 0.0))))
-        regionMetadatas.add(RegionMetadata("east", Location(1.35735, 103.94, LatLng(1.35735, 103.94))))
-        regionMetadatas.add(RegionMetadata("central", Location(1.35735, 103.82, LatLng(1.35735, 103.82))))
-        regionMetadatas.add(RegionMetadata("south", Location(1.29587, 103.82, LatLng(1.29587, 103.82))))
-        regionMetadatas.add(RegionMetadata("north", Location(1.41803, 103.82, LatLng(1.41803, 103.82))))
+    override fun getPsi(dateTime: String?, date: String?): Observable<Response<Psi>> {
+        var regionMetadatas = RealmList<RegionMetadata>()
+        regionMetadatas.add(RegionMetadata("west", Location(1.35735, 103.7)))
+        regionMetadatas.add(RegionMetadata("national", Location(0.0, 0.0)))
+        regionMetadatas.add(RegionMetadata("east", Location(1.35735, 103.94)))
+        regionMetadatas.add(RegionMetadata("central", Location(1.35735, 103.82)))
+        regionMetadatas.add(RegionMetadata("south", Location(1.29587, 103.82)))
+        regionMetadatas.add(RegionMetadata("north", Location(1.41803, 103.82)))
 
-        var items = ArrayList<Item>()
+        var items = RealmList<Item>()
         items.add(
                 Item(
                         "2017-10-30T09:00:00+08:00",
@@ -44,7 +44,7 @@ class MockPsiRestService(val delegate: BehaviorDelegate<RestServices>) : RestSer
 
         val apiInfo = ApiInfo("healthy")
 
-        var psi = Psi(regionMetadatas, items, apiInfo)
+        var psi = Psi(Psi.PsiType.TYPE_DATETIME,regionMetadatas, items, apiInfo)
 
         return delegate.returningResponse(Response.success(psi)).getPsi(dateTime, date)
     }
