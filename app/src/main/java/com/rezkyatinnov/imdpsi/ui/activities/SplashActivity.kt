@@ -29,11 +29,50 @@ class SplashActivity : AppCompatActivity() {
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         }
 
-        loadingPsiData()
+        loadPsiData()
     }
 
-    private fun loadingPsiData(){
+    private fun loadPsiData(){
 
+        PsiHelper.getPsiThisDateTime(object : RestObserver<Psi>() {
+            override fun onSubscribe(d: Disposable) {
+            }
+
+            override fun onSuccess(headers: Headers?, body: Psi?) {
+                LocalData.saveOrUpdate(body)
+                loadPsiDataToday()
+            }
+
+            override fun onComplete() {
+            }
+
+            override fun onFailed(error: ErrorResponse?) {
+                var filter = QueryFilters()
+                filter.add(Psi.PsiType.TYPE_FIELD_NAME,Psi.PsiType.TYPE_DATETIME)
+                try {
+                    LocalData.get(filter, Psi::class.java) // check if app has localdata
+                    loadPsiDataToday()
+                }catch(e:Exception) {
+                    AlertUtils.showDialogDualActions(
+                            this@SplashActivity,
+                            "Ouch!",
+                            "Retrieving data from server failed. Local Data not available",
+                            "TRY AGAIN",
+                            "EXIT",
+                            { _, _ ->
+                                loadPsiData()
+                            },
+                            { _, _ ->
+                                finish()
+                            })
+                }
+            }
+
+        })
+
+    }
+
+    private fun loadPsiDataToday(){
         PsiHelper.getPsiThisDate(object : RestObserver<Psi>() {
             override fun onSubscribe(d: Disposable) {
             }
@@ -60,11 +99,11 @@ class SplashActivity : AppCompatActivity() {
                     AlertUtils.showDialogDualActions(
                             this@SplashActivity,
                             "Ouch!",
-                            "Retrieving data from server failed. Local Data not available",
+                            "Retrieving data from server failed. Local 24 hourly Data not available",
                             "TRY AGAIN",
                             "EXIT",
                             { _, _ ->
-                                loadingPsiData()
+                                loadPsiDataToday()
                             },
                             { _, _ ->
                                 finish()

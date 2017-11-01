@@ -55,9 +55,9 @@ class PsiRestTest {
             override fun onSuccess(headers: Headers?, body: Psi?) {
                 assertNotNull(body!!.regionMetadata)
                 assertNotNull(body.items)
-                assertNotNull(body.items!![0].timestamp)
+                assertNotNull(body.items!![0]!!.timestamp)
                 assertEquals(1, body.items!!.size)
-                assertEquals("2017-10-30T09:45:00", body.items!![0].timestamp)
+                assertEquals("2017-10-30T09:45:00", body.items!![0]!!.timestamp)
             }
 
             override fun onComplete() {
