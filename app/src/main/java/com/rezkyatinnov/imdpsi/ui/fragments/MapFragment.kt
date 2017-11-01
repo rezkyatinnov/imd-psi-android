@@ -18,6 +18,7 @@ import com.rezkyatinnov.imdpsi.R
 import com.rezkyatinnov.imdpsi.models.Psi
 import com.rezkyatinnov.imdpsi.models.Readings
 import com.rezkyatinnov.imdpsi.models.RegionMetadata
+import com.rezkyatinnov.imdpsi.ui.adapters.MapMarkerInfoAdapter
 import com.rezkyatinnov.kyandroid.localdata.LocalData
 import com.rezkyatinnov.kyandroid.localdata.QueryFilters
 import io.realm.RealmList
@@ -49,11 +50,12 @@ class MapFragment: Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCal
         supportMapFragment!!.getMapAsync(this)
     }
 
-    private fun pinLocationMarker(title: String, location: LatLng) {
+    private fun pinLocationMarker(title: String, location: LatLng, readings: Readings) {
         if (googleMap != null) {
             val marker = MarkerOptions()
                     .position(location)
                     .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(resources, R.drawable.ic_location_on)))
+                    .snippet(readings.toString(title))
                     .title(title)
             mapMarkers.add(googleMap!!.addMarker(marker))
         }
@@ -61,18 +63,18 @@ class MapFragment: Fragment(), OnMapReadyCallback, GoogleApiClient.ConnectionCal
 
     private fun setPsiData() {
         val psi = LocalData.get(QueryFilters(),Psi::class.java)
-        activity.runOnUiThread { setRegionalMetaDataLocation(psi.regionMetadata!!) }
-
+        activity.runOnUiThread { setRegionalMetaDataLocation(psi) }
     }
 
-    private fun setRegionalMetaDataLocation(metaDataLocation: RealmList<RegionMetadata>) {
+    private fun setRegionalMetaDataLocation(psi: Psi) {
         for(marker in mapMarkers){
             marker.remove()
         }
         mapMarkers.clear()
-        for (regionMetadata in metaDataLocation) {
-            pinLocationMarker(regionMetadata.name!!, LatLng(regionMetadata.location?.latitude!!,regionMetadata.location?.longitude!!))
+        for (regionMetadata in psi.regionMetadata!!) {
+            pinLocationMarker(regionMetadata.name!!, LatLng(regionMetadata.location?.latitude!!,regionMetadata.location?.longitude!!), psi.items!![0]!!.readings!!)
         }
+        googleMap?.setInfoWindowAdapter(MapMarkerInfoAdapter(activity.layoutInflater))
     }
 
     override fun onConnected(bundle: Bundle?) {}

@@ -42,7 +42,9 @@ internal class Chart24Fragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         initChart()
 
-        setChartData(linechart,LocalData.get(QueryFilters(),Psi::class.java))
+        var filter = QueryFilters()
+        filter.add("isDatetime",0)
+        setChartData(linechart,LocalData.get(filter,Psi::class.java))
     }
 
     private fun initChart() {
