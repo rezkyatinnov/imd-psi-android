@@ -15,5 +15,5 @@ import retrofit2.http.Query
 interface RestServices {
     @Headers("Accept: application/json")
     @GET("environment/psi")
-    fun getPsi(@Query("date_time") dateTime: String, @Query("date") date: String): Observable<Response<Psi>>
+    fun getPsi(@Query("date_time") dateTime: String?, @Query("date") date: String?): Observable<Response<Psi>>
 }

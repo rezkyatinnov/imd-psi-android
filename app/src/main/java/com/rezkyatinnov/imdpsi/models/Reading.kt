@@ -2,11 +2,12 @@ package com.rezkyatinnov.imdpsi.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import io.realm.RealmObject
 
 /**
  * Created by rezkya on 10/31/17.
  */
-class Reading(
+open class Reading(
         @SerializedName("west")
         @Expose
         var west: Double = 0.toDouble(),
@@ -25,4 +26,17 @@ class Reading(
         @SerializedName("north")
         @Expose
         var north: Double = 0.toDouble()
-)
+): RealmObject() {
+        fun getRegionValue(region: String): Double{
+                when(region){
+                        "west" -> return west
+                        "national" -> return national
+                        "east" -> return east
+                        "central" -> return central
+                        "south" -> return south
+                        "north" -> return north
+                        else -> return 0.0
+                }
+
+        }
+}
